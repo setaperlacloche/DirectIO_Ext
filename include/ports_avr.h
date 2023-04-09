@@ -253,6 +253,9 @@ template <u8 pin> struct _pins {};
 #elif defined(ARDUINO_AVR_LILYPAD_ARDUINO_USB_PLUS_BOARD)
 #include "boards/avr/lilypadusbplus.h"
 
+#elif defined(ARDUINO_attiny)
+#include "boards/avr/attiny.h"
+
 #else
 #warning "Unsupported Arduino AVR variant - falling back to digitalRead and digitalWrite. If you are using Arduino IDE 1.0, be sure to #define an Arduino variant (e.g. #define ARDUINO_AVR_UNO 1). See ports.h."
 #define DIRECTIO_FALLBACK 1
