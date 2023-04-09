@@ -40,10 +40,10 @@ class Input {
         Input(boolean pullup=true) {
             pinMode(pin, pullup ? INPUT_PULLUP : INPUT);
         }
-        boolean read() {
+        static inline boolean read() __attribute__((always_inline)) {
             return _pins<pin>::input_read();
         }
-        operator boolean() {
+        inline operator boolean() __attribute__((always_inline)) {
             return read();
         }
 };
@@ -59,24 +59,32 @@ class Output {
             // turn off PWM on this pin, if needed
             digitalWrite(pin, initial_value);
         }
-        void write(boolean value) {
+        static inline void write(boolean value) __attribute__((always_inline)) {
             _pins<pin>::output_write(value);
         }
-        Output& operator =(boolean value) {
+        static inline Output& operator =(boolean value) __attribute__((always_inline)) {
             write(value);
             return *this;
         }
-        void toggle() {
+        static inline void toggle() __attribute__((always_inline)) {
             write(! read());
         }
-        void pulse(boolean value=HIGH) {
+        static inline void pulse(boolean value=HIGH) __attribute__((always_inline)) {
             write(value);
             write(! value);
         }
-        boolean read() {
+        static inline void inputMode(boolean pullup = true)  __attribute__((always_inline)) {
+            bitWrite(*port_t(_pins<pin>::dir), _pins<pin>::bit, 0);
+            bitWrite(*port_t(_pins<pin>::out), _pins<pin>::bit, pullup);
+        }
+        static inline void outputMode(boolean initial_value = LOW) __attribute__((always_inline)) {
+            bitWrite(*port_t(_pins<pin>::out), _pins<pin>::bit, initial_value);
+            bitWrite(*port_t(_pins<pin>::dir), _pins<pin>::bit, 1);
+        }
+        static inline boolean read() __attribute__((always_inline)) {
             return _pins<pin>::output_read();
         }
-        operator boolean() {
+        inline operator boolean() __attribute__((always_inline)) {
             return read();
         }
 };
@@ -92,24 +100,24 @@ class OutputLow {
             // turn off PWM on this pin, if needed
             digitalWrite(pin, initial_value);
         }
-        void write(boolean value) {
+        static inline void write(boolean value) __attribute__((always_inline)) {
             _pins<pin>::output_write(!value);
         }
-        OutputLow& operator =(boolean value) {
+        inline OutputLow& operator =(boolean value) __attribute__((always_inline)) {
             write(value);
             return *this;
         }
-        void toggle() {
+        static inline void toggle() __attribute__((always_inline)) {
             write(! read());
         }
-        void pulse(boolean value=LOW) {
+        static inline void pulse(boolean value=LOW) __attribute__((always_inline)) {
             write(value);
             write(! value);
         }
-        boolean read() {
+        static inline boolean read() __attribute__((always_inline)) {
             return !_pins<pin>::output_read();
         }
-        operator boolean() {
+        inline operator boolean() __attribute__((always_inline)) {
             return read();
         }
 };
