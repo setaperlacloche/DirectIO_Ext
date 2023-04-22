@@ -62,7 +62,7 @@ class Output {
         static inline void write(boolean value) __attribute__((always_inline)) {
             _pins<pin>::output_write(value);
         }
-        static inline Output& operator =(boolean value) __attribute__((always_inline)) {
+        inline Output& operator =(boolean value) __attribute__((always_inline)) {
             write(value);
             return *this;
         }
