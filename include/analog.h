@@ -57,10 +57,10 @@ class AnalogOutput<NO_PIN> {
     // the backlight fully on. In that case, we will use this
     // type of AnalogOutput which is basically a no-op.
     public:
-        AnalogOutput(u8 initial_value=0) {}
-        void write(u8 value) {}
+        AnalogOutput(__attribute__((unused)) u8 initial_value=0) {}
+        void write(__attribute__((unused)) u8 value) {}
 
-        AnalogOutput& operator = (u8 value) {
+        AnalogOutput& operator = (__attribute__((unused)) u8 value) {
             return *this;
         }
 };
@@ -88,10 +88,10 @@ class AnalogOutputLow<NO_PIN> {
     // an optional pin and that pin is not being used.
     // See AnalogOutput<NO_PIN> for details.
     public:
-        AnalogOutputLow(u8 initial_value=0) {}
-        void write(u8 value) {}
+        AnalogOutputLow(__attribute__((unused)) u8 initial_value=0) {}
+        void write(__attribute__((unused)) u8 value) {}
 
-        AnalogOutputLow& operator = (u8 value) {
+        AnalogOutputLow& operator = (__attribute__((unused)) u8 value) {
             return *this;
         }
 };
